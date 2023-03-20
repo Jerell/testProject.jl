@@ -84,7 +84,7 @@ end
 
 function eos(params::EoSParams)
   dlngdvm = 1
-  R = 0.0831446261815324
+  R = 0.0831446261815324u"L * bar * K^-1 * mol^-1"
   return (
     T::Quantity{Real,dimension(u"K"),typeof(u"K")},
     Vₘ::Quantity{Real,dimension(u"L/mol"),typeof(u"L/mol")}
