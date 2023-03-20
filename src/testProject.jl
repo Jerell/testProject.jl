@@ -70,13 +70,13 @@ compoundparams = [
 ]
 
 function ŋ(params::EoSParams)
-  return function (Vₘ::Quantity{T,dimension(u"L/mol"),typeof(u"L/mol")})
+  return function (Vₘ::Quantity{Real,dimension(u"L/mol"),typeof(u"L/mol")})
     return params.b / (4Vₘ)
   end
 end
 
 function g(params::EoSParams)
-  return function (Vₘ::Quantity{T,dimension(u"L/mol"),typeof(u"L/mol")})
+  return function (Vₘ::Quantity{Real,dimension(u"L/mol"),typeof(u"L/mol")})
     return 1 / (1 - 1.9ŋ(params)(Vₘ))
   end
 end
@@ -87,7 +87,7 @@ function eos(params::EoSParams)
   R = 0.0831446261815324
   return (
     T::Quantity{Real,dimension(u"K"),typeof(u"K")},
-    Vₘ::Quantity{T,dimension(u"L/mol"),typeof(u"L/mol")}
+    Vₘ::Quantity{Real,dimension(u"L/mol"),typeof(u"L/mol")}
   ) -> begin
     Δᴬᴮ = g(params)(Vₘ) *
           (exp(params.ϵ / (R * T)) - 1) *
