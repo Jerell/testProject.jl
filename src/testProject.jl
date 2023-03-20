@@ -89,6 +89,10 @@ function eos(params::EoSParams)
     T::Quantity{Real,dimension(u"K"),typeof(u"K")},
     Vₘ::Real
   ) -> begin
+    Δᴬᴮ = g(params)(Vₘ) *
+          (exp(params.ϵ / (R * T)) - 1) *
+          params.b * params.β
+
     return R * T / (Vₘ - params.b) -
            α(params)(T) / (Vₘ * (Vₘ + params.b)) -
            1 / 2 * (R * T / Vₘ^-1) * (1 + Vₘ^-1 * dlngdvm)
