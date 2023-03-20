@@ -81,9 +81,9 @@ function g(params::EoSParams)
   end
 end
 
-dlngdvm = 1
 
 function eos(params::EoSParams)
+  dlngdvm = 1
   R = 0.0831446261815324
   return (
     T::Quantity{Real,dimension(u"K"),typeof(u"K")},
