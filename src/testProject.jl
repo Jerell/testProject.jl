@@ -81,6 +81,21 @@ function g(params::EoSParams)
   end
 end
 
+dlngdvm = 1
+
+function eos(params::EoSParams)
+  R = 0.0831446261815324
+  return (
+    T::Quantity{Real,dimension(u"K"),typeof(u"K")},
+    Vₘ::Real
+  ) -> begin
+    return R * T / (Vₘ - params.b) -
+           α(params)(T) / (Vₘ * (Vₘ + params.b)) -
+           1 / 2 * (R * T / Vₘ^-1) * (1 + Vₘ^-1 * dlngdvm)
+    # * association term
+  end
+end
+
 export Pipe, Fluid, EoSParams, compoundparams
 
 end
