@@ -1,18 +1,6 @@
 module testProject
 using Unitful
 
-struct Pipe
-  length::typeof(1u"m")
-  diameter::typeof(1u"m")
-  height::typeof(1u"m")
-end
-
-struct Fluid
-  pressure::typeof(1u"bar")
-  temperature::typeof(1u"°C")
-  flowrate::typeof(1u"kg/s")
-end
-
 struct EoSParams{T<:Real}
   compound::String
   b::Quantity{T,dimension(u"L/mol"),typeof(u"L/mol")}
@@ -37,13 +25,11 @@ struct EoSParams{T<:Real}
   )
 end
 
-
 function α(params::EoSParams)
   return function (T::Quantity{Real,dimension(u"K"),typeof(u"K")})
     params.a₀ * (1 + params.c₁ * (1 - √(T / params.Tᶜᵐ)))^2
   end
 end
-
 
 Ωₐ = 0.42748
 Ωᵦ = 0.08664
@@ -80,7 +66,6 @@ function g(params::EoSParams)
     return 1 / (1 - 1.9ŋ(params)(Vₘ))
   end
 end
-
 
 function eos(params::EoSParams)
   dlngdvm = 1
