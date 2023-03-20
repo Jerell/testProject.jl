@@ -38,9 +38,9 @@ struct EoSParams{T<:Real}
 end
 
 
-function α(alk::EoSParams)
+function α(params::EoSParams)
   return function (T::Real)
-    alk.a₀ * (1 + alk.c₁ * (1 - √(T / alk.Tᶜᵐ)))^2
+    params.a₀ * (1 + params.c₁ * (1 - √(T / params.Tᶜᵐ)))^2
   end
 end
 
@@ -69,15 +69,15 @@ compoundparams = [
   EoSParams("water", 0.0145, 1.2277, 0.6736, 166.55, 69.2, 303.17, 150.459, 0.38016)
 ]
 
-function ŋ(alk::EoSParams)
+function ŋ(params::EoSParams)
   return function (Vₘ::Real)
-    return alk.b / (4Vₘ)
+    return params.b / (4Vₘ)
   end
 end
 
-function g(alk::EoSParams)
+function g(params::EoSParams)
   return function (Vₘ::Real)
-    return 1 / (1 - 1.9ŋ(alk)(Vₘ))
+    return 1 / (1 - 1.9ŋ(params)(Vₘ))
   end
 end
 
