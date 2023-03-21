@@ -85,6 +85,6 @@ function eos(params::EoSParams)
   end
 end
 
-export Pipe, Fluid, EoSParams, compoundparams
+export EoSParams, compoundparams
 
 end
