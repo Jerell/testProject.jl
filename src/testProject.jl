@@ -4,9 +4,9 @@ using Unitful
 struct EoSParams{T<:Real}
   compound::String
   b::Quantity{T,dimension(u"L/mol"),typeof(u"L/mol")}
-  a₀::Quantity{T,dimension(u"bar * L^2 *mol^-2"),typeof(u"bar * L^2 *mol^-2")}
+  a₀::Quantity{T,dimension(u"bar * L^2 * mol^-2"),typeof(u"bar * L^2 * mol^-2")}
   c₁::T
-  ϵ::Quantity{T,dimension(u"bar*L*mol^-1"),typeof(u"bar*L*mol^-1")}
+  ϵ::Quantity{T,dimension(u"bar * L * mol^-1"),typeof(u"bar * L * mol^-1")}
   β::T
   Tᶜᵐ::Quantity{T,dimension(u"K"),typeof(u"K")}
   Pᶜᵐ::Quantity{T,dimension(u"bar"),typeof(u"bar")}
@@ -15,9 +15,9 @@ struct EoSParams{T<:Real}
   EoSParams(name::String, b::Real, a₀::Real, c₁::Real, ϵ::Real, β::Real, Tᶜᵐ::Real, Pᶜᵐ::Real, mₘ::Real) = new{typeof(b)}(
     name,
     b * u"L/mol",
-    a₀ * u"bar * L^2 *mol^-2",
+    a₀ * u"bar * L^2 * mol^-2",
     c₁,
-    ϵ * u"bar*L*mol^-1",
+    ϵ * u"bar * L * mol^-1",
     β * 10^3,
     Tᶜᵐ * u"K",
     Pᶜᵐ * u"bar",
