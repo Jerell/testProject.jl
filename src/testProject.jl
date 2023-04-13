@@ -79,6 +79,16 @@ function Δᴬᴮ(params::EoSParams)
   end
 end
 
+function xₐ(
+  x::Real,
+  params::EoSParams,
+  T::Quantity{Real,dimension(u"K"),typeof(u"K")},
+  Vₘ::Quantity{Real,dimension(u"L/mol"),typeof(u"L/mol")}
+)
+  xᵦ = 1 # not sure what this is supposed to be
+  return 1 / (1 + (1 / Vₘ) * x * xᵦ * Δᴬᴮ(params)(T, Vₘ))
+end
+
 
 function eos(params::EoSParams)
   R = 0.0831446261815324u"L * bar * K^-1 * mol^-1"
@@ -91,7 +101,7 @@ function eos(params::EoSParams)
            α(params)(T) / (Vₘ * (Vₘ + params.b)) -
            1 / 2 * (R * T / Vₘ^-1) * # (1 + Vₘ^-1 * dlngdvm)
            # gʳᵉᶠ = 1 provides similar results
-           1
+           (1 - xₐ(1, params, T, Vₘ))
   end
 end
 
