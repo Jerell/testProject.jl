@@ -67,21 +67,31 @@ function g(params::EoSParams)
   end
 end
 
-function eos(params::EoSParams)
-  dlngdvm = 1
+function Δᴬᴮ(params::EoSParams)
   R = 0.0831446261815324u"L * bar * K^-1 * mol^-1"
   return (
     T::Quantity{Real,dimension(u"K"),typeof(u"K")},
     Vₘ::Quantity{Real,dimension(u"L/mol"),typeof(u"L/mol")}
   ) -> begin
-    Δᴬᴮ = g(params)(Vₘ) *
-          (exp(params.ϵ / (R * T)) - 1) *
-          params.b * params.β
+    return g(params)(Vₘ) *
+           (exp(params.ϵ / (R * T)) - 1) *
+           params.b * params.β
+  end
+end
+
+
+function eos(params::EoSParams)
+  R = 0.0831446261815324u"L * bar * K^-1 * mol^-1"
+  return (
+    T::Quantity{Real,dimension(u"K"),typeof(u"K")},
+    Vₘ::Quantity{Real,dimension(u"L/mol"),typeof(u"L/mol")}
+  ) -> begin
 
     return R * T / (Vₘ - params.b) -
            α(params)(T) / (Vₘ * (Vₘ + params.b)) -
-           1 / 2 * (R * T / Vₘ^-1) * (1 + Vₘ^-1 * dlngdvm)
-    # * association term
+           1 / 2 * (R * T / Vₘ^-1) * # (1 + Vₘ^-1 * dlngdvm)
+           # gʳᵉᶠ = 1 provides similar results
+           1
   end
 end
 
